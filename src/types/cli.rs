@@ -1,50 +1,67 @@
-use clap::arg_enum;
-use structopt::StructOpt;
 
-#[derive(Debug, StructOpt)]
-#[structopt(name = "options")]
+use clap::{ Clap };
+
+#[derive(Clap)]
 pub struct Opt {
 
-    #[structopt(short, long)]
+    #[clap(short, long, about = "Debug flag")]
     debug: bool,
 
-    #[structopt(possible_values = &SubCommand::variants(), case_insensitive = true)]
+    #[clap(subcommand)]
     pub subcmd: SubCommand, 
 }
 
-arg_enum! {
-    #[derive(Debug)]
-    pub enum SubCommand { 
-        Add,
-        Delete,
-        Get,
-        List,
-        Update
-    }
+
+#[derive(Clap)]
+pub enum SubCommand { 
+    #[clap(
+        name = "add",
+        about = "add"
+    )]
+    Add(Add),
+    #[clap(
+        name = "delete",
+        about = "delete"
+    )]
+    Delete(Delete),
+    #[clap(
+        name = "get",
+        about = "get"
+    )]
+    Get(Get),
+    #[clap(
+        name = "list",
+        about = "list"
+    )]
+    List(List),
+    #[clap(
+        name = "update",
+        about = "update"
+    )]
+    Update(Update)
 }
 
-
-#[derive(Debug)]
+#[derive(Clap, Debug)]
 pub struct Add {
-
+    pub repo_url: String,
 }
 
-#[derive(Debug)]
+#[derive(Clap, Debug)]
 pub struct Delete {
 
 }
 
-#[derive(Debug)]
+#[derive(Clap, Debug)]
 pub struct Get {
-
+    
 }
 
-#[derive(Debug)]
+#[derive(Clap, Debug)]
 pub struct List {
 
 }
 
-#[derive(Debug)]
+#[derive(Clap, Debug)]
 pub struct Update {
 
 }
